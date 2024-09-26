@@ -1,45 +1,18 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+# Use the official Python 3.9 image as the base image
+FROM python:3.9
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# Set environment variables
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 
-# Copy Python requirements file
-COPY requirements.txt .
+# Copy the add-on's run script to the container
+COPY run.sh /run.sh
 
-
-RUN \
-    apk add --no-cache --virtual .build-dependencies \
-    build-base=0.5-r3 \
-    python3-dev=3.11.10-r0 \
-    \
-    && apk add --no-cache \
-    py3-pip=23.3.1-r0 \
-    py3-wheel=0.42.0-r0 \
-    python3=3.11.10-r0 \
-    \
-    && pip install -r /tmp/requirements.txt \
-    \
-    && cd /usr/lib/python3.11/site-packages/ \
-    && patch -p1 < /patches/force_recompile.patch \
-    \
-    && find /usr \
-    \( -type d -a -name test -o -name tests -o -name '__pycache__' \) \
-    -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
-    -exec rm -rf '{}' + \
-    \
-    && apk del --no-cache --purge .build-dependencies
+# Make the run script executable
+RUN chmod a+x /run.sh
 
 # Install Streamlit
 RUN pip install streamlit
 
-# Copy data for add-on
-COPY run.sh /
-RUN chmod a+x /run.sh
-
+# Set the default command to execute the run script
 CMD [ "/run.sh" ]
-
-LABEL \
-    io.hass.version="VERSION" \
-    io.hass.type="addon" \
-    io.hass.arch="armhf|aarch64|i386|amd64"

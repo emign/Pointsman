@@ -1,6 +1,6 @@
 name: "Pointsman"
 description: "Charge your home battery system depending on your dynamic tariff"
-version: "16.3.1"
+version: "0.0.2f"
 slug: "Pointsman"
 init: false
 arch:
@@ -9,4 +9,5 @@ arch:
   - armhf
   - armv7
   - i386
-image: ghcr.io/hassio-addons/base
+ports:
+  - 8501/tcp: "Streamlit"
