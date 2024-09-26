@@ -1,23 +1,16 @@
-# Dockerfile
-FROM python:3.9-slim
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
-# Arbeitsverzeichnis erstellen und setzen
-WORKDIR /app
+# Install necessary packages
+RUN apk add --no-cache python3 py3-pip  # Für Alpine Linux-basierte Basis-Images
+# oder
+# RUN apt-get update && apt-get install -y python3 python3-pip  # Für Debian/Ubuntu-basierte Basis-Images
 
-# Kopiere requirements.txt in das Arbeitsverzeichnis
-COPY requirements.txt .
+# Install Streamlit
+RUN pip install streamlit
 
-# Installiere die Abhängigkeiten
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy data for add-on
+COPY run.sh /
+RUN chmod a+x /run.sh
 
-# Kopiere den Rest der Anwendung in das Arbeitsverzeichnis
-COPY . .
-
-# Setze die Umgebungsvariable für Streamlit
-ENV STREAMLIT_PORT=8501
-
-# Exponiere den Port, auf dem Streamlit läuft
-EXPOSE 8501
-
-# Befehl zum Starten der Streamlit-Anwendung
-CMD ["/run.sh"]
+CMD [ "/run.sh" ]
