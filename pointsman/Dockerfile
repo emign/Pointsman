@@ -33,11 +33,11 @@ ENV ARROW_HOME=/usr/local
 ENV PARQUET_HOME=/usr/local
 
 # Download and build Apache Arrow
-RUN git clone https://github.com/apache/arrow.git \
-    && cd arrow \
+RUN git clone https://github.com/apache/arrow.git /arrow \
+    && cd /arrow \
     && git checkout apache-arrow-${ARROW_VERSION} \
-    && mkdir build \
-    && cd build \
+    && mkdir /arrow/cpp/build \
+    && cd /arrow/cpp/build \
     && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${ARROW_HOME} -DARROW_PARQUET=ON -DARROW_PYTHON=ON -DARROW_BUILD_TESTS=OFF .. \
     && make -j$(nproc) \
     && make install
