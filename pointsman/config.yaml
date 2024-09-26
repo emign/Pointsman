@@ -10,4 +10,4 @@ arch:
   - armv7
   - i386
 ports:
-  - 8501/tcp: "Streamlit"
+  - 8501/tcp: 8501
