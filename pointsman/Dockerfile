@@ -1,6 +1,5 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:15.0.9
-# hadolint ignore=DL3006
-FROM ${BUILD_FROM}
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -11,13 +10,13 @@ COPY requirements.txt .
 
 RUN \
     apk add --no-cache --virtual .build-dependencies \
-        build-base=0.5-r3 \
-        python3-dev=3.11.10-r0 \
+    build-base=0.5-r3 \
+    python3-dev=3.11.10-r0 \
     \
     && apk add --no-cache \
-        py3-pip=23.3.1-r0 \
-        py3-wheel=0.42.0-r0 \
-        python3=3.11.10-r0 \
+    py3-pip=23.3.1-r0 \
+    py3-wheel=0.42.0-r0 \
+    python3=3.11.10-r0 \
     \
     && pip install -r /tmp/requirements.txt \
     \
@@ -25,9 +24,9 @@ RUN \
     && patch -p1 < /patches/force_recompile.patch \
     \
     && find /usr \
-        \( -type d -a -name test -o -name tests -o -name '__pycache__' \) \
-        -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
-        -exec rm -rf '{}' + \
+    \( -type d -a -name test -o -name tests -o -name '__pycache__' \) \
+    -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
+    -exec rm -rf '{}' + \
     \
     && apk del --no-cache --purge .build-dependencies
 
@@ -39,3 +38,8 @@ COPY run.sh /
 RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
+
+LABEL \
+    io.hass.version="VERSION" \
+    io.hass.type="addon" \
+    io.hass.arch="armhf|aarch64|i386|amd64"
