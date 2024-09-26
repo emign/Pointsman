@@ -2,7 +2,20 @@ ARG BUILD_FROM
 FROM $BUILD_FROM
 
 # Install Python 3.9, pip, and other dependencies
-RUN apk add --no-cache python3 py3-pip py3-virtualenv build-base py3-numpy py3-pandas cmake
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    py3-virtualenv \
+    build-base \
+    py3-numpy \
+    py3-pandas \
+    cmake \
+    python3-dev \
+    linux-headers \
+    musl-dev \
+    libffi-dev \
+    zlib-dev \
+    git
 
 # Create a virtual environment
 RUN python3 -m venv /opt/venv

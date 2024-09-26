@@ -1,6 +1,6 @@
 name: "Pointsman"
 description: "Charge your home battery system depending on your dynamic tariff"
-version: "0.0.2n"
+version: "0.0.2o"
 slug: "pointsman"
 init: false
 arch:
