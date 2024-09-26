@@ -1,7 +1,7 @@
 ---
 name: "Pointsman"
 description: "Charge your home battery system depending on your dynamic tariff"
-version: "0.0.2b"
+version: "0.0.2c"
 slug: "Pointsman"
 init: false
 arch:
@@ -10,18 +10,3 @@ arch:
   - armhf
   - armv7
   - i386
-startup: services
-ports:
-  8000/tcp: 8000
-options:
-  beer: true
-  wine: true
-  liquor: false
-  name: "world"
-  year: 2017
-schema:
-  beer: bool
-  wine: bool
-  liquor: bool
-  name: str
-  year: int
