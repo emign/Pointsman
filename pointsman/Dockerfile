@@ -17,6 +17,18 @@ RUN apk add --no-cache \
     zlib-dev \
     git
 
+# Install Arrow dependencies
+RUN apk add --no-cache \
+    boost-dev \
+    gflags-dev \
+    glog-dev \
+    snappy-dev \
+    lz4-dev \
+    zstd-dev \
+    brotli-dev \
+    jemalloc-dev \
+    rapidjson-dev
+
 # Create a virtual environment
 RUN python3 -m venv /opt/venv
 
