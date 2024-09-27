@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [     
+      {
+        "name": "Python: Debug pointsman.py",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "${workspaceFolder}/pointsman/pointsman.py",
+        "console": "integratedTerminal",
+        "env": {
+          "PYTHONUNBUFFERED": "1"
+        },
+        "justMyCode": false
+      }
+    ]
+  }
