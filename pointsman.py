@@ -1,21 +1,25 @@
 import logging
 import yaml
-import tariffapis
-import tariffapis
+from tariffapis.tibber import Tibber
 
-logging.basicConfig(level=logging.DEBUG)
-log = logging.getLogger(__name__)
-handler = logging.FileHandler("logs/pointsman.log", mode="w")
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-handler.setFormatter(formatter)
-log.addHandler(handler)
 
-with open("config.yaml", "r") as f:    
-    config = yaml.safe_load(f)
-    log.debug("Reading config file")
-    log.debug(config)
+def launch():
+    logging.basicConfig(level=logging.DEBUG)
+    log = logging.getLogger(__name__)
+    handler = logging.FileHandler("logs/pointsman.log", mode="w")
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    handler.setFormatter(formatter)
+    log.addHandler(handler)
 
-# TIBBER PREISE ABHOLEN
+    with open("config.yaml", "r") as f:    
+        config = yaml.safe_load(f)
+        log.debug("Reading config file")
+        log.debug(config)
 
-tariff = tariffapis.Tibber(config['apis']['tibber']['key'])
-log.info(tariff.get_current_price())
+    # TIBBER PREISE ABHOLEN
+
+    tariff = Tibber(config['apis']['tibber']['key'])
+    log.info(tariff.get_current_price())
+
+
+launch()

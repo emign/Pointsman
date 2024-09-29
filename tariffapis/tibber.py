@@ -1,43 +1,8 @@
-from abc import ABC, abstractmethod
 import json
 import requests
 
-class Tariff(ABC):
-    """
-    Abstract base class for Tariff.
-    """
 
-    @abstractmethod
-    def get_current_price(self):
-        """
-        Get the current price information.
-        """
-        pass
-
-    @abstractmethod
-    def get_prices(self):
-        """
-        Get the current price information.
-        """
-        pass
-
-    @abstractmethod
-    def get_today_prices(self):
-        """
-        Get today's price information.
-        """
-        pass
-
-    @abstractmethod
-    def get_tomorrow_prices(self):
-        """
-        Get tomorrow's price information.
-        """
-        pass
-
-
-
-class Tibber(Tariff):
+class Tibber():
     def __init__(self, api_token):
         self.api_token = api_token
         self.api_url = 'https://api.tibber.com/v1-beta/gql'
